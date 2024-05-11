@@ -1,25 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import styled from 'styled-components';
+import Header from './components/Header'
+import Banner from './components/Banner';
+import Comment from './components/Comment';
+import Rank from './components/Rank';
+import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Banner/>
+      <Comment/>
+      <Rank/>
+      <Rank/>
+      <Header/>
+      {/* 모달창 맨위보내려면 rank보다 아래에 렌더링.. */}
+      <Footer/>
+    </Container>
   );
 }
 
+const Container = styled.div`
+// background-color:gray;
+// width: 80%;
+display: flex;
+flex-direction: column;
+align-items: center;
+margin: auto;
+padding:0;
+`
 export default App;
