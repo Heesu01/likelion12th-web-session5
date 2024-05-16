@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';import styled from 'styled-components';
 import logo from '../assets/image/icon_logo.png';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +7,7 @@ import kakao from '../assets/image/icon_kakao.png';
 import google from '../assets/image/icon_google.png';
 import twitter from '../assets/image/icon_twitter.png';
 import line from '../assets/image/icon_line.png';
-
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
@@ -23,7 +22,9 @@ const Header = () => {
 
   return (
     <HeaderContainer>
-      <Logo src={logo}></Logo>
+      <Link to ="/">
+        <Logo src={logo}></Logo>
+      </Link>
       <Menu>
         <MenuItem>영화</MenuItem>
         <MenuItem>시리즈</MenuItem>
@@ -65,7 +66,7 @@ const Header = () => {
 
 
 const HeaderContainer = styled.header`
-  width:80%;
+  width:100%;
   height:25px;
   display: flex;
   align-items: center;
@@ -78,8 +79,9 @@ const HeaderContainer = styled.header`
 `;
 
 const Logo = styled.img`
-  width:10%;
+  width:140px;
   margin: 10px;
+  margin-left: 60px;
 `;
 
 const Menu = styled.nav`
@@ -126,6 +128,7 @@ const Join = styled.button`
   border: 1px solid #A9A9A9;
   border-radius: 5px;
   cursor: pointer;
+  margin-right: 60px;
 `
 
 

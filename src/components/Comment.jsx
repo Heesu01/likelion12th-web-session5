@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import movie from '../assets/image/1.jpg';
 const Comment = () => {
   return (
-    // 임의의 코멘트 컴포넌트
+
     <CommentOutContainer>
       <h2>지금 뜨는 코멘트</h2>
       <CommentContainer>

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { DATA } from '../assets/Data'; 
+import { Link } from "react-router-dom";
 
 const Rank = () => {
   return (
@@ -8,11 +9,11 @@ const Rank = () => {
       <h2>박스오피스 순위</h2>
       <RankContainer>
         {DATA.map((movie) => (
-          <MovieBox key={movie.rank}>
+          <MovieBox key={movie.rank} to = {`/movie/${movie.rank}`}>
             <MovieImage src={movie.img} alt={movie.title} />
             <Ranking>{movie.rank}</Ranking>
             <Info>
-              <Title>{movie.title} </Title>
+              <Title >{movie.title} </Title>
               <P>
               <Span>{movie.year}</Span>
               <Span> · {movie.country}</Span>
@@ -39,7 +40,7 @@ white-space: nowrap;
 scrollbar-width: none;
 z-index: 0;
 `
-const MovieBox = styled.div`
+const MovieBox = styled(Link)`
   display: inline-block;
   margin-right: 20px;
   max-width: 240px;
@@ -49,6 +50,8 @@ const MovieBox = styled.div`
   // height:460px;
   // overflow:hidden;
   z-index: 0;
+  text-decoration: none;
+  color: #000;
 `
 
 const Ranking = styled.span`
@@ -71,10 +74,11 @@ const Info = styled.div`
   margin:0;
   padding:0;
 `
-const Title = styled.h4`
+const Title = styled.div`
 margin:5px;
 margin-bottom:3px;
 font-size:14px;
+font-weight: bold;
 `
 
 const P = styled.p`
