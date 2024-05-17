@@ -1,6 +1,6 @@
 // ../src/components/Modal.js
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Modal = (props) => {
   const { open, close } = props;
