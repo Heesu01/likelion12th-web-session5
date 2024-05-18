@@ -1,32 +1,17 @@
-import './App.css';
-import styled from 'styled-components';
-import Header from './components/Header'
-import Banner from './components/Banner';
-import Comment from './components/Comment';
-import Rank from './components/Rank';
-import Footer from './components/Footer';
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Movie from "./pages/Movie";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
-    <Container>
-      <Banner/>
-      <Comment/>
-      <Rank/>
-      <Rank/>
-      <Header/>
-      {/* 모달창 맨위보내려면 rank보다 아래에 렌더링.. */}
-      <Footer/>
-    </Container>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/movie/:rank" element={<Movie />} />
+      <Route path="/*" element={<NotFound />}></Route>
+    </Routes>
   );
 }
 
-const Container = styled.div`
-// background-color:gray;
-// width: 80%;
-display: flex;
-flex-direction: column;
-align-items: center;
-margin: auto;
-padding:0;
-`
 export default App;
