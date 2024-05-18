@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import styled from "styled-components";
 import movie from "../assets/image/1.jpg";
 const Comment = () => {
@@ -89,15 +89,12 @@ const CommentBox = styled.div`
   width: 450px;
   height: auto;
   text-align: left;
-  position: relative;
   border: 1px solid #ddd;
   border-radius: 5px;
 `;
 
-const Info = styled.div`
-  margin: 0;
-  padding: 0;
-`;
+const Info = styled.div``;
+
 const Title = styled.h4`
   margin: 10px;
   padding-left: 10px;
@@ -120,7 +117,6 @@ const Image = styled.img`
 `;
 const P = styled.p`
   text-align: left;
-  white-space: normal;
 `;
 
 export default Comment;

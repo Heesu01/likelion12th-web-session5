@@ -1,11 +1,11 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
 import adv from "../assets/image/adv.png";
 const Banner = () => {
   return (
-    <div>
+    <Fragment>
       <Img src={adv} alt="" />
-    </div>
+    </Fragment>
   );
 };
 

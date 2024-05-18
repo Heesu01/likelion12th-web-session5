@@ -34,7 +34,7 @@ const Span = styled.span`
   color: red;
 `;
 const Contain = styled.div`
-  background-color: (0, 0, 10);
+  background-color: rgb(0, 0, 10);
   height: 300px;
   font-size: 10px;
   text-align: left;

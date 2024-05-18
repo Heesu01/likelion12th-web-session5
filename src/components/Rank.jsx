@@ -8,19 +8,19 @@ const Rank = () => {
     <RankOutContainer>
       <h2>박스오피스 순위</h2>
       <RankContainer>
-        {DATA.map((movie) => (
-          <MovieBox key={movie.rank} to={`/movie/${movie.rank}`}>
-            <MovieImage src={movie.img} alt={movie.title} />
-            <Ranking>{movie.rank}</Ranking>
+        {DATA.map(({ rank, img, title, year, country, percent, audience }) => (
+          <MovieBox key={rank} to={`/movie/${rank}`}>
+            <MovieImage src={img} alt={title} />
+            <Ranking>{rank}</Ranking>
             <Info>
-              <Title>{movie.title} </Title>
+              <Title>{title} </Title>
               <P>
-                <Span>{movie.year}</Span>
-                <Span> · {movie.country}</Span>
+                <Span>{year}</Span>
+                <Span> · {country}</Span>
               </P>
               <P>
-                <Span2>예매율 {movie.percent}</Span2>
-                <Span2> · 누적 관객 {movie.audience}명</Span2>
+                <SpanUnder>예매율 {percent}</SpanUnder>
+                <SpanUnder> 누적 관객 {audience}명</SpanUnder>
               </P>
             </Info>
           </MovieBox>
@@ -83,7 +83,7 @@ const P = styled.p`
 const Span = styled.span`
   font-size: 12px;
 `;
-const Span2 = styled.span`
+const SpanUnder = styled.span`
   font-size: 10px;
   margin: 0;
   color: #999;
