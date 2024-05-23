@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Rank = () => {
   const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true); // 로딩 상태 추가
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -19,7 +19,7 @@ const Rank = () => {
         );
         const data = await response.json();
         setMovies(data.results);
-        setLoading(false); // 데이터를 받아오고 로딩 상태를 false로 변경
+        setLoading(false);
       } catch (error) {
         console.error("Failed to fetch movies", error);
       }
@@ -31,7 +31,7 @@ const Rank = () => {
   return (
     <RankOutContainer>
       <h2>박스오피스 순위</h2>
-      {loading ? ( // 로딩 상태에 따라 다른 내용을 렌더링
+      {loading ? (
         <LoadingMessage>로딩중...</LoadingMessage>
       ) : (
         <RankContainer>

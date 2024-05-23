@@ -187,7 +187,7 @@ const BackgroundImg = styled.img`
 `;
 const Info = styled.div`
   position: absolute;
-  bottom: 30px;
+  bottom: 50px;
   left: 90px;
   color: #fff;
 `;
