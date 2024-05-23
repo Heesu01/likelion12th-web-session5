@@ -7,12 +7,12 @@ const Comment = () => {
       <h2>지금 뜨는 코멘트</h2>
       <CommentContainer>
         <CommentBox>
-          <Info>
+          <div>
             <Title>
               idid <Star>★★★★★</Star>
             </Title>
             <Content>
-              <Image src={movie} art="영화포스터"></Image>
+              <Image src={movie} alt="영화포스터"></Image>
               <p>
                 범죄도시
                 <br />
@@ -20,15 +20,15 @@ const Comment = () => {
               </p>
               <P></P>
             </Content>
-          </Info>
+          </div>
         </CommentBox>
         <CommentBox>
-          <Info>
+          <div>
             <Title>
               idid <Star>★★★★★</Star>
             </Title>
             <Content>
-              <Image src={movie} art="영화포스터"></Image>
+              <Image src={movie} alt="영화포스터"></Image>
               <p>
                 범죄도시
                 <br />
@@ -36,15 +36,15 @@ const Comment = () => {
               </p>
               <P></P>
             </Content>
-          </Info>
+          </div>
         </CommentBox>
         <CommentBox>
-          <Info>
+          <div>
             <Title>
               idid <Star>★★★★★</Star>
             </Title>
             <Content>
-              <Image src={movie} art="영화포스터"></Image>
+              <Image src={movie} alt="영화포스터"></Image>
               <p>
                 범죄도시
                 <br />
@@ -52,15 +52,15 @@ const Comment = () => {
               </p>
               <P></P>
             </Content>
-          </Info>
+          </div>
         </CommentBox>
         <CommentBox>
-          <Info>
+          <div>
             <Title>
               idid <Star>★★★★★</Star>
             </Title>
             <Content>
-              <Image src={movie} art="영화포스터"></Image>
+              <Image src={movie} alt="영화포스터"></Image>
               <p>
                 범죄도시
                 <br />
@@ -68,7 +68,7 @@ const Comment = () => {
               </p>
               <P></P>
             </Content>
-          </Info>
+          </div>
         </CommentBox>
       </CommentContainer>
     </CommentOutContainer>
@@ -93,7 +93,8 @@ const CommentBox = styled.div`
   border-radius: 5px;
 `;
 
-const Info = styled.div``;
+// const Info = styled.div`
+// `;
 
 const Title = styled.h4`
   margin: 10px;
@@ -107,7 +108,6 @@ const Star = styled.span`
   font-size: 20px;
 `;
 const Content = styled.div`
-  display: flex;
   text-align: left;
 `;
 const Image = styled.img`

@@ -22,7 +22,7 @@ const Header = () => {
   return (
     <HeaderContainer>
       <Link to="/">
-        <Logo src={logo}></Logo>
+        <Logo src={logo} />
       </Link>
       <Menu>
         <MenuItem>영화</MenuItem>
@@ -44,20 +44,20 @@ const Header = () => {
             <Input type="text" placeholder="이메일" />
             <Input type="Password" placeholder="비밀번호" />
             <Button>로그인</Button>
-            <P1>비밀번호를 잊어버리셨나요?</P1>
-            <P2>
+            <Pup>비밀번호를 잊어버리셨나요?</Pup>
+            <Pdown>
               계정이 없으신가요? <Span>회원가입</Span>
-            </P2>
+            </Pdown>
             <Line>
               <Br></Br>
               <P3>OR</P3>
               <Br></Br>
             </Line>
-            <div className="icon">
-              <Img src={kakao} alt="" />
-              <Img src={google} alt="" />
-              <Img src={twitter} alt="" />
-              <Img src={line} alt="" />
+            <div>
+              <IconImg src={kakao} alt="kakao" />
+              <IconImg src={google} alt="google" />
+              <IconImg src={twitter} alt="twitter" />
+              <IconImg src={line} alt="line" />
             </div>
             <Box>
               <p>
@@ -83,6 +83,7 @@ const HeaderContainer = styled.header`
   border-bottom: 1px solid #ddd;
   position: fixed;
   background-color: #fff;
+  z-index: 1000; //헤더 맨앞으로
 `;
 
 const Logo = styled.img`
@@ -94,10 +95,10 @@ const Logo = styled.img`
 const Menu = styled.nav`
   margin-left: 20px;
   display: flex;
+  gap: 25px;
 `;
 
 const MenuItem = styled.div`
-  margin-right: 25px;
   font-size: 14px;
   cursor: pointer;
 `;
@@ -172,12 +173,12 @@ const Button = styled.button`
   border: none;
   border-radius: 5px;
 `;
-const P1 = styled.p`
+const Pup = styled.p`
   font-size: 13px;
   color: #ff355a;
   margin-top: 20px;
 `;
-const P2 = styled.p`
+const Pdown = styled.p`
   font-size: 13px;
   margin-top: 0px;
   color: gray;
@@ -200,7 +201,7 @@ const P3 = styled.p`
   color: gray;
   font-size: 13px;
 `;
-const Img = styled.img`
+const IconImg = styled.img`
   width: 50px;
   height: auto;
   margin: 7px;

@@ -14,8 +14,6 @@ const Movie = () => {
   );
 };
 const Container = styled.div`
-  // background-color:gray;
-  // width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
