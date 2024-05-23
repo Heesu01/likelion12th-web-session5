@@ -12,7 +12,6 @@ const Home = () => {
       <Banner />
       {/* <Comment /> */}
       <Rank />
-      <Rank />
       <Header />
       <Footer />
     </Container>

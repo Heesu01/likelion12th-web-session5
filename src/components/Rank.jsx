@@ -5,12 +5,15 @@ import { Link } from "react-router-dom";
 const Rank = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [nowMovies, setNowMovies] = useState([]);
+  const [upcoming, setUpcoming] = useState([]);
+  const [minimumDate, setMinimumDate] = useState("");
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         const response = await fetch(
-          "https://api.themoviedb.org/3/movie/popular?language=ko-KR&page=1",
+          "https://api.themoviedb.org/3/movie/popular?language=ko-KR",
           {
             headers: {
               Authorization: "Bearer " + process.env.REACT_APP_API_KEY,
@@ -24,39 +27,121 @@ const Rank = () => {
         console.error("Failed to fetch movies", error);
       }
     };
+    const fetchNowMovies = async () => {
+      try {
+        const response = await fetch(
+          "https://api.themoviedb.org/3/movie/now_playing?language=ko-KR",
+          {
+            headers: {
+              Authorization: "Bearer " + process.env.REACT_APP_API_KEY,
+            },
+          }
+        );
+        const data = await response.json();
+        setNowMovies(data.results);
+        setLoading(false);
+      } catch (error) {
+        console.error("Failed to fetch movies", error);
+      }
+    };
+    const fetchUpcoming = async () => {
+      try {
+        const response = await fetch(
+          "https://api.themoviedb.org/3/movie/upcoming",
+          {
+            headers: {
+              Authorization: "Bearer " + process.env.REACT_APP_API_KEY,
+            },
+          }
+        );
+        const data = await response.json();
+        const minimum = data.dates.minimum;
+        setMinimumDate(minimum);
+        setUpcoming(data.results);
+        setLoading(false);
+      } catch (error) {
+        console.error("Failed to fetch movies", error);
+      }
+    };
 
     fetchMovies();
+    fetchNowMovies();
+    fetchUpcoming();
   }, []);
 
   return (
     <RankOutContainer>
-      <h2>박스오피스 순위</h2>
       {loading ? (
         <LoadingMessage>로딩중...</LoadingMessage>
       ) : (
-        <RankContainer>
-          {movies.map((movie) => (
-            <MovieBox key={movie.id} to={`/movie/${movie.id}`}>
-              <MovieImage
-                src={`https://image.tmdb.org/t/p/w500` + movie.poster_path}
-                alt={movie.title}
-              />
-              <Ranking>{movie.rank}</Ranking>
-              <div>
-                <Title>{movie.title} </Title>
-                <P>
-                  <Span>{movie.release_date.slice(0, 4)}</Span>
-                  <Span> · {movie.country}</Span>
-                </P>
-                <P>
-                  <SpanUnder>평점 {movie.vote_average}</SpanUnder>
-                  <SpanUnder> 퍙가수 {movie.popularity}명</SpanUnder>
-                </P>
-              </div>
-            </MovieBox>
-          ))}
-          <MovieBox />
-        </RankContainer>
+        <>
+          <RankContainer>
+            <H2>박스오피스 순위</H2>
+            {movies.map((movie) => (
+              <MovieBox key={movie.id} to={`/movie/${movie.id}`}>
+                <MovieImage
+                  src={`https://image.tmdb.org/t/p/w500` + movie.poster_path}
+                  alt={movie.title}
+                />
+                <Ranking>{movie.rank}</Ranking>
+                <div>
+                  <Title>{movie.title} </Title>
+                  <P>
+                    <Span>{movie.release_date.slice(0, 4)}</Span>
+                    <Span> · {movie.country}</Span>
+                  </P>
+                  <P>
+                    <SpanUnder>평점 {movie.vote_average}</SpanUnder>
+                    <SpanUnder> 퍙가수 {movie.popularity}명</SpanUnder>
+                  </P>
+                </div>
+              </MovieBox>
+            ))}
+            <MovieBox />
+          </RankContainer>
+          <RankContainer>
+            <H2>상영작</H2>
+            {nowMovies.map((movie) => (
+              <MovieBox key={movie.id} to={`/movie/${movie.id}`}>
+                <MovieImage
+                  src={`https://image.tmdb.org/t/p/w500` + movie.poster_path}
+                  alt={movie.title}
+                />
+                <Ranking>{movie.rank}</Ranking>
+                <div>
+                  <Title>{movie.title} </Title>
+                  <P>
+                    <Span>{movie.release_date.slice(0, 4)}</Span>
+                    <Span> · {movie.country}</Span>
+                  </P>
+                  <P>
+                    <SpanUnder>평점 {movie.vote_average}</SpanUnder>
+                    <SpanUnder> 퍙가수 {movie.popularity}명</SpanUnder>
+                  </P>
+                </div>
+              </MovieBox>
+            ))}
+            <MovieBox />
+          </RankContainer>
+          <RankContainer>
+            <H2>왓챠 공개 예정작</H2>
+            {upcoming.map((movie) => (
+              <MovieBox key={movie.id} to={`/movie/${movie.id}`}>
+                <MovieImage
+                  src={`https://image.tmdb.org/t/p/w500` + movie.poster_path}
+                  alt={movie.title}
+                />
+                <div>
+                  <Title>{movie.title} </Title>
+                  <P>
+                    <Span> 왓챠 {minimumDate}</Span>
+                  </P>
+                </div>
+              </MovieBox>
+            ))}
+            <MovieBox />
+          </RankContainer>
+        </>
       )}
     </RankOutContainer>
   );
@@ -64,7 +149,9 @@ const Rank = () => {
 
 const RankOutContainer = styled.div`
   width: 80%;
-  margin-top: 30px;
+`;
+const H2 = styled.h2`
+  margin-top: 40px;
 `;
 const RankContainer = styled.div`
   overflow-x: auto;
