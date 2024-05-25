@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const Rank = () => {
-  const [movies, setMovies] = useState([]);
+const Now = () => {
   const [loading, setLoading] = useState(true);
+  const [nowMovies, setNowMovies] = useState([]);
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    const fetchNowMovies = async () => {
       try {
         const response = await fetch(
-          "https://api.themoviedb.org/3/movie/popular?language=ko-KR",
+          "https://api.themoviedb.org/3/movie/now_playing?language=ko-KR",
           {
             headers: {
               Authorization: "Bearer " + process.env.REACT_APP_API_KEY,
@@ -18,24 +18,23 @@ const Rank = () => {
           }
         );
         const data = await response.json();
-        setMovies(data.results);
+        setNowMovies(data.results);
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch movies", error);
       }
     };
 
-    fetchMovies();
-  }, []);
-
+    fetchNowMovies();
+  });
   return (
     <RankOutContainer>
       {loading ? (
         <LoadingMessage>로딩중...</LoadingMessage>
       ) : (
         <RankContainer>
-          <H2>박스오피스 순위</H2>
-          {movies.map((movie) => (
+          <H2>상영작</H2>
+          {nowMovies.map((movie) => (
             <MovieBox key={movie.id} to={`/movie/${movie.id}`}>
               <MovieImage
                 src={`https://image.tmdb.org/t/p/w500` + movie.poster_path}
@@ -55,14 +54,21 @@ const Rank = () => {
               </div>
             </MovieBox>
           ))}
+          <MovieBox />
         </RankContainer>
       )}
     </RankOutContainer>
   );
 };
-
 const RankOutContainer = styled.div`
   width: 80%;
+`;
+const LoadingMessage = styled.h1`
+  font-size: 24px;
+  font-weight: bold;
+  color: #555;
+  text-align: center;
+  margin-top: 50px;
 `;
 const H2 = styled.h2`
   margin-top: 40px;
@@ -118,12 +124,4 @@ const SpanUnder = styled.span`
   color: #999;
 `;
 
-const LoadingMessage = styled.h1`
-  font-size: 24px;
-  font-weight: bold;
-  color: #555;
-  text-align: center;
-  margin-top: 50px;
-`;
-
-export default Rank;
+export default Now;

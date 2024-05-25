@@ -118,8 +118,6 @@ const MovieInfo = () => {
                 <br />
                 {formatRuntime(movieDetails.runtime)} •
                 {getRating(movieDetails.adult)} <br />
-                {/* 예매 순위 {movieDetails.rank}위 ({movieDetails.percent}) •
-                누적관객 {movieDetails.audience}명 */}
               </p>
             </Info>
 
@@ -229,7 +227,9 @@ const MovieInfo = () => {
     </Container>
   );
 };
-const Container = styled.div``;
+const Container = styled.div`
+  width: 100%;
+`;
 const BackgroundImg = styled.img`
   width: 100%;
   height: 700px;
@@ -325,8 +325,7 @@ const PosterImg = styled.img`
 `;
 const Gallery = styled.div`
   margin-top: 20px;
-  max-width: 1500px;
-  /* width: 100%; /어떻게해야 화면따라맞춰지지 */
+  width: 100%;
   display: flex;
   overflow: scroll;
   scrollbar-width: none;
