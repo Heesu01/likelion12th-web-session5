@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Banner from "../components/Banner";
-import Comment from "../components/Comment";
+// import Comment from "../components/Comment";
 import Rank from "../components/Rank";
 import Footer from "../components/Footer";
 
@@ -10,8 +10,7 @@ const Home = () => {
   return (
     <Container>
       <Banner />
-      <Comment />
-      <Rank />
+      {/* <Comment /> */}
       <Rank />
       <Header />
       <Footer />
