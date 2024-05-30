@@ -37,9 +37,13 @@ const Star = styled.span`
 `;
 const Contain = styled.div`
   background-color: rgb(0, 0, 10);
-  height: 300px;
+  height: 100px;
   font-size: 10px;
   text-align: left;
   padding-left: 150px;
+  p,
+  a {
+    color: #fff;
+  }
 `;
 export default Footer;

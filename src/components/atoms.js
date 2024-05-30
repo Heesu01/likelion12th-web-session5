@@ -25,3 +25,8 @@ export const movieListState = selector({
     }
   },
 });
+
+export const darkModeState = atom({
+  key: "darkModeState",
+  default: false,
+});

@@ -8,9 +8,11 @@ import { RiPencilFill } from "react-icons/ri";
 import { AiOutlineEye, AiOutlineEllipsis } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Recommend from "./Recommend";
+// import { useDarkMode } from "./DarkMode";
 
 const MovieInfo = () => {
   const { id } = useParams();
+  // const { darkMode } = useDarkMode();
 
   const [movieDetails, setMovieDetails] = useState(null);
   const [similarMovies, setSimilarMovies] = useState([]);
@@ -132,6 +134,7 @@ const MovieInfo = () => {
             </Info>
 
             <MovieDetailBox>
+              {/* <MovieDetailBox darkMode={darkMode}> */}
               <MovieDetail>
                 <Left>
                   <MovieImg
@@ -254,11 +257,13 @@ const Info = styled.div`
   transform: translateX(30%);
   top: 60%;
   left: 50px;
-  color: #fff;
+  h1,
+  p,
+  span {
+    color: #fff;
+  }
 `;
-const MovieDetailBox = styled.div`
-  background-color: #efefef;
-`;
+const MovieDetailBox = styled.div``;
 const MovieDetail = styled.div`
   width: 87%;
   margin: auto;
@@ -307,7 +312,6 @@ const P = styled.p`
   color: gray;
 `;
 const Content = styled.div`
-  color: #575757;
   margin: 20px 0;
 `;
 const OtherDetailBox = styled.div`
