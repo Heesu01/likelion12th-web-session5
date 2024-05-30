@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Rank = () => {
   const [movies, setMovies] = useState([]);
@@ -9,7 +10,7 @@ const Rank = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           "https://api.themoviedb.org/3/movie/popular?language=ko-KR",
           {
             headers: {
@@ -17,8 +18,7 @@ const Rank = () => {
             },
           }
         );
-        const data = await response.json();
-        setMovies(data.results);
+        setMovies(response.data.results);
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch movies", error);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Now = () => {
   const [loading, setLoading] = useState(true);
@@ -9,7 +10,7 @@ const Now = () => {
   useEffect(() => {
     const fetchNowMovies = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           "https://api.themoviedb.org/3/movie/now_playing?language=ko-KR",
           {
             headers: {
@@ -17,8 +18,7 @@ const Now = () => {
             },
           }
         );
-        const data = await response.json();
-        setNowMovies(data.results);
+        setNowMovies(response.data.results);
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch movies", error);
@@ -33,14 +33,13 @@ const Now = () => {
         <LoadingMessage>로딩중...</LoadingMessage>
       ) : (
         <RankContainer>
-          <H2>상영작</H2>
+          <H2>현재 상영작</H2>
           {nowMovies.map((movie) => (
             <MovieBox key={movie.id} to={`/movie/${movie.id}`}>
               <MovieImage
                 src={`https://image.tmdb.org/t/p/w500` + movie.poster_path}
                 alt={movie.title}
               />
-              <Ranking>{movie.rank}</Ranking>
               <div>
                 <Title>{movie.title} </Title>
                 <P>
@@ -86,17 +85,6 @@ const MovieBox = styled(Link)`
   position: relative;
   text-decoration: none;
   color: #000;
-`;
-
-const Ranking = styled.span`
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 5px;
 `;
 
 const MovieImage = styled.img`

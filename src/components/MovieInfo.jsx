@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 import StarRating from "./StarRating2";
 import { FiPlus } from "react-icons/fi";
 import { RiPencilFill } from "react-icons/ri";
 import { AiOutlineEye, AiOutlineEllipsis } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import Recommend from "./Recommend";
 
 const MovieInfo = () => {
   const { id } = useParams();
@@ -20,7 +22,7 @@ const MovieInfo = () => {
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           `https://api.themoviedb.org/3/movie/${id}?language=ko-KR`,
           {
             headers: {
@@ -28,7 +30,7 @@ const MovieInfo = () => {
             },
           }
         );
-        const data = await response.json();
+        const data = response.data;
         setMovieDetails(data);
         setLoading(false);
         if (data.genres) {
@@ -49,7 +51,7 @@ const MovieInfo = () => {
 
     const fetchSimilarMovies = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           `https://api.themoviedb.org/3/movie/${id}/similar?language=ko-KR`,
           {
             headers: {
@@ -57,7 +59,7 @@ const MovieInfo = () => {
             },
           }
         );
-        const data = await response.json();
+        const data = response.data;
         setSimilarMovies(data.results);
       } catch (error) {
         console.error("Failed to fetch similar movies", error);
@@ -66,7 +68,7 @@ const MovieInfo = () => {
 
     const fetchRecommendations = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           `https://api.themoviedb.org/3/movie/${id}/recommendations?language=ko-KR`,
           {
             headers: {
@@ -74,7 +76,7 @@ const MovieInfo = () => {
             },
           }
         );
-        const data = await response.json();
+        const data = response.data;
         setRecommendaions(data.results);
       } catch (error) {
         console.error("Failed to fetch similar movies", error);
@@ -94,6 +96,14 @@ const MovieInfo = () => {
     const hours = Math.floor(runtime / 60);
     const minutes = runtime % 60;
     return `${hours}시간 ${minutes}분`;
+  };
+
+  const handleScroll = (e) => {
+    if (!window.scrollY) return;
+
+    window.scrollTo({
+      top: 0,
+    });
   };
 
   return (
@@ -194,6 +204,7 @@ const MovieInfo = () => {
                       to={`/movie/${movie.id}`}
                       key={movie.id}
                       className="card"
+                      onClick={handleScroll}
                     >
                       <PosterImg
                         src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
@@ -210,6 +221,7 @@ const MovieInfo = () => {
                       to={`/movie/${movie.id}`}
                       key={movie.id}
                       className="card"
+                      onClick={handleScroll()}
                     >
                       <PosterImg
                         src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
@@ -219,6 +231,9 @@ const MovieInfo = () => {
                     </GalleryItem>
                   ))}
                 </Gallery>
+                <Galleryy>
+                  <Recommend />
+                </Galleryy>
               </div>
             </OtherDetailBox>
           </>
@@ -334,5 +349,8 @@ const GalleryItem = styled(Link)`
   margin-right: 20px;
   text-decoration: none;
   color: #000;
+`;
+const Galleryy = styled.div`
+  width: 124%;
 `;
 export default MovieInfo;

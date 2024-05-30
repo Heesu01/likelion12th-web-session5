@@ -19,9 +19,16 @@ const Header = () => {
     setLoginModalOpen(false);
   };
 
+  const handleScroll = (e) => {
+    if (!window.scrollY) return;
+
+    window.scrollTo({
+      top: 0,
+    });
+  };
   return (
     <HeaderContainer>
-      <Link to="/">
+      <Link to="/" onClick={handleScroll()}>
         <Logo src={logo} />
       </Link>
       <Menu>
@@ -35,7 +42,6 @@ const Header = () => {
           type="text"
           placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요. "
         />
-        {/* <FontAwesomeIcon icon={faSearch} /> */}
         <Login onClick={openModal}>로그인</Login>
         <Modal open={loginModalOpen} close={closeModal}>
           <Container>
