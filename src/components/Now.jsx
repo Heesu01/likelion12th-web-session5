@@ -3,45 +3,43 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const Rank = () => {
-  const [movies, setMovies] = useState([]);
+const Now = () => {
   const [loading, setLoading] = useState(true);
+  const [nowMovies, setNowMovies] = useState([]);
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    const fetchNowMovies = async () => {
       try {
         const response = await axios.get(
-          "https://api.themoviedb.org/3/movie/popular?language=ko-KR",
+          "https://api.themoviedb.org/3/movie/now_playing?language=ko-KR",
           {
             headers: {
               Authorization: "Bearer " + process.env.REACT_APP_API_KEY,
             },
           }
         );
-        setMovies(response.data.results);
+        setNowMovies(response.data.results);
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch movies", error);
       }
     };
 
-    fetchMovies();
-  }, []);
-
+    fetchNowMovies();
+  });
   return (
     <RankOutContainer>
       {loading ? (
         <LoadingMessage>로딩중...</LoadingMessage>
       ) : (
         <RankContainer>
-          <H2>박스오피스 순위</H2>
-          {movies.map((movie) => (
+          <H2>현재 상영작</H2>
+          {nowMovies.map((movie) => (
             <MovieBox key={movie.id} to={`/movie/${movie.id}`}>
               <MovieImage
                 src={`https://image.tmdb.org/t/p/w500` + movie.poster_path}
                 alt={movie.title}
               />
-              <Ranking>{movie.rank}</Ranking>
               <div>
                 <Title>{movie.title} </Title>
                 <P>
@@ -55,14 +53,21 @@ const Rank = () => {
               </div>
             </MovieBox>
           ))}
+          <MovieBox />
         </RankContainer>
       )}
     </RankOutContainer>
   );
 };
-
 const RankOutContainer = styled.div`
   width: 80%;
+`;
+const LoadingMessage = styled.h1`
+  font-size: 24px;
+  font-weight: bold;
+  color: #555;
+  text-align: center;
+  margin-top: 50px;
 `;
 const H2 = styled.h2`
   margin-top: 40px;
@@ -80,17 +85,6 @@ const MovieBox = styled(Link)`
   position: relative;
   text-decoration: none;
   color: #000;
-`;
-
-const Ranking = styled.span`
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 5px;
 `;
 
 const MovieImage = styled.img`
@@ -118,12 +112,4 @@ const SpanUnder = styled.span`
   color: #999;
 `;
 
-const LoadingMessage = styled.h1`
-  font-size: 24px;
-  font-weight: bold;
-  color: #555;
-  text-align: center;
-  margin-top: 50px;
-`;
-
-export default Rank;
+export default Now;

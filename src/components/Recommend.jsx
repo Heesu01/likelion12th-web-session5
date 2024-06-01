@@ -1,40 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { movieListState } from "./atoms";
 
-const Rank = () => {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const response = await axios.get(
-          "https://api.themoviedb.org/3/movie/popular?language=ko-KR",
-          {
-            headers: {
-              Authorization: "Bearer " + process.env.REACT_APP_API_KEY,
-            },
-          }
-        );
-        setMovies(response.data.results);
-        setLoading(false);
-      } catch (error) {
-        console.error("Failed to fetch movies", error);
-      }
-    };
-
-    fetchMovies();
-  }, []);
-
+const Recommend = () => {
+  const movies = useRecoilValue(movieListState);
   return (
     <RankOutContainer>
-      {loading ? (
+      {movies.length === 0 ? (
         <LoadingMessage>로딩중...</LoadingMessage>
       ) : (
         <RankContainer>
-          <H2>박스오피스 순위</H2>
+          <H2>왓챠 추천작</H2>
           {movies.map((movie) => (
             <MovieBox key={movie.id} to={`/movie/${movie.id}`}>
               <MovieImage
@@ -50,7 +28,7 @@ const Rank = () => {
                 </P>
                 <P>
                   <SpanUnder>평점 {movie.vote_average}</SpanUnder>
-                  <SpanUnder> 퍙가수 {movie.popularity}명</SpanUnder>
+                  <SpanUnder> 평점 수 {movie.popularity}명</SpanUnder>
                 </P>
               </div>
             </MovieBox>
@@ -126,4 +104,4 @@ const LoadingMessage = styled.h1`
   margin-top: 50px;
 `;
 
-export default Rank;
+export default Recommend;

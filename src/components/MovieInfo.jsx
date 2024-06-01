@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 import StarRating from "./StarRating2";
 import { FiPlus } from "react-icons/fi";
 import { RiPencilFill } from "react-icons/ri";
 import { AiOutlineEye, AiOutlineEllipsis } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import Recommend from "./Recommend";
+// import { useDarkMode } from "./DarkMode";
 
 const MovieInfo = () => {
   const { id } = useParams();
+  // const { darkMode } = useDarkMode();
 
   const [movieDetails, setMovieDetails] = useState(null);
   const [similarMovies, setSimilarMovies] = useState([]);
@@ -20,7 +24,7 @@ const MovieInfo = () => {
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           `https://api.themoviedb.org/3/movie/${id}?language=ko-KR`,
           {
             headers: {
@@ -28,7 +32,7 @@ const MovieInfo = () => {
             },
           }
         );
-        const data = await response.json();
+        const data = response.data;
         setMovieDetails(data);
         setLoading(false);
         if (data.genres) {
@@ -49,7 +53,7 @@ const MovieInfo = () => {
 
     const fetchSimilarMovies = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           `https://api.themoviedb.org/3/movie/${id}/similar?language=ko-KR`,
           {
             headers: {
@@ -57,7 +61,7 @@ const MovieInfo = () => {
             },
           }
         );
-        const data = await response.json();
+        const data = response.data;
         setSimilarMovies(data.results);
       } catch (error) {
         console.error("Failed to fetch similar movies", error);
@@ -66,7 +70,7 @@ const MovieInfo = () => {
 
     const fetchRecommendations = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           `https://api.themoviedb.org/3/movie/${id}/recommendations?language=ko-KR`,
           {
             headers: {
@@ -74,7 +78,7 @@ const MovieInfo = () => {
             },
           }
         );
-        const data = await response.json();
+        const data = response.data;
         setRecommendaions(data.results);
       } catch (error) {
         console.error("Failed to fetch similar movies", error);
@@ -94,6 +98,14 @@ const MovieInfo = () => {
     const hours = Math.floor(runtime / 60);
     const minutes = runtime % 60;
     return `${hours}시간 ${minutes}분`;
+  };
+
+  const handleScroll = (e) => {
+    if (!window.scrollY) return;
+
+    window.scrollTo({
+      top: 0,
+    });
   };
 
   return (
@@ -118,12 +130,11 @@ const MovieInfo = () => {
                 <br />
                 {formatRuntime(movieDetails.runtime)} •
                 {getRating(movieDetails.adult)} <br />
-                {/* 예매 순위 {movieDetails.rank}위 ({movieDetails.percent}) •
-                누적관객 {movieDetails.audience}명 */}
               </p>
             </Info>
 
             <MovieDetailBox>
+              {/* <MovieDetailBox darkMode={darkMode}> */}
               <MovieDetail>
                 <Left>
                   <MovieImg
@@ -196,6 +207,7 @@ const MovieInfo = () => {
                       to={`/movie/${movie.id}`}
                       key={movie.id}
                       className="card"
+                      onClick={handleScroll}
                     >
                       <PosterImg
                         src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
@@ -212,6 +224,7 @@ const MovieInfo = () => {
                       to={`/movie/${movie.id}`}
                       key={movie.id}
                       className="card"
+                      onClick={handleScroll()}
                     >
                       <PosterImg
                         src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
@@ -221,6 +234,9 @@ const MovieInfo = () => {
                     </GalleryItem>
                   ))}
                 </Gallery>
+                <Galleryy>
+                  <Recommend />
+                </Galleryy>
               </div>
             </OtherDetailBox>
           </>
@@ -229,7 +245,9 @@ const MovieInfo = () => {
     </Container>
   );
 };
-const Container = styled.div``;
+const Container = styled.div`
+  width: 100%;
+`;
 const BackgroundImg = styled.img`
   width: 100%;
   height: 700px;
@@ -239,11 +257,13 @@ const Info = styled.div`
   transform: translateX(30%);
   top: 60%;
   left: 50px;
-  color: #fff;
+  h1,
+  p,
+  span {
+    color: #fff;
+  }
 `;
-const MovieDetailBox = styled.div`
-  background-color: #efefef;
-`;
+const MovieDetailBox = styled.div``;
 const MovieDetail = styled.div`
   width: 87%;
   margin: auto;
@@ -292,7 +312,6 @@ const P = styled.p`
   color: gray;
 `;
 const Content = styled.div`
-  color: #575757;
   margin: 20px 0;
 `;
 const OtherDetailBox = styled.div`
@@ -325,8 +344,7 @@ const PosterImg = styled.img`
 `;
 const Gallery = styled.div`
   margin-top: 20px;
-  max-width: 1500px;
-  /* width: 100%; /어떻게해야 화면따라맞춰지지 */
+  width: 100%;
   display: flex;
   overflow: scroll;
   scrollbar-width: none;
@@ -335,5 +353,8 @@ const GalleryItem = styled(Link)`
   margin-right: 20px;
   text-decoration: none;
   color: #000;
+`;
+const Galleryy = styled.div`
+  width: 124%;
 `;
 export default MovieInfo;
